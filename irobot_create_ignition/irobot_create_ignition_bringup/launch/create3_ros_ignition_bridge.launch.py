@@ -106,6 +106,27 @@ def generate_launch_description():
                                    (['/model/', robot_name, '/tf'], 'tf')
                                ])
 
+    # IMU bridge
+    imu_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='ros_gz_bridge_imu',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        arguments=[
+            # 根据实际的IMU话题格式修改
+            ['/imu' +
+             '@sensor_msgs/msg/Imu' +
+             '[ignition.msgs.IMU']
+        ],
+        remappings=[
+            (['/imu'],
+             [namespace, '/imu'])
+        ]
+    )
+
     # Bumper contact sensor bridge
     bumper_contact_bridge = Node(package='ros_gz_bridge', executable='parameter_bridge',
                                  name='bumper_contact_bridge',
@@ -195,6 +216,7 @@ def generate_launch_description():
     ld.add_action(cmd_vel_bridge)
     ld.add_action(pose_bridge)
     ld.add_action(odom_base_tf_bridge)
+    ld.add_action(imu_bridge)
     ld.add_action(bumper_contact_bridge)
     ld.add_action(cliff_bridges)
     ld.add_action(ir_bridges)
