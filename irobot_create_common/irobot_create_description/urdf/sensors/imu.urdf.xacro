@@ -19,6 +19,7 @@
       <update_rate>${update_rate}</update_rate>
       <visualize>true</visualize>
       <topic>imu</topic>
+      <gz_frame_id>imu_link</gz_frame_id>
       <!-- namespace无效 -->
       <!-- <namespace>${namespace}</namespace> -->
       <imu>

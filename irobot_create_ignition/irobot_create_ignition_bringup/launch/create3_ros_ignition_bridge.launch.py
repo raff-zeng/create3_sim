@@ -113,7 +113,8 @@ def generate_launch_description():
         name='ros_gz_bridge_imu',
         output='screen',
         parameters=[{
-            'use_sim_time': use_sim_time
+            'use_sim_time': use_sim_time,
+            'frame_id': 'imu_link'
         }],
         arguments=[
             # 根据实际的IMU话题格式修改
@@ -122,7 +123,7 @@ def generate_launch_description():
              '[ignition.msgs.IMU']
         ],
         remappings=[
-            (['/imu'],
+            (['/model/', robot_name, '/imu_link/imu'],
              [namespace, '/imu'])
         ]
     )
